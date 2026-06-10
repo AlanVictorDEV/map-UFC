@@ -1,0 +1,550 @@
+{
+  "vertices": [
+    {
+      "id": "portaria",
+      "label": "Portaria",
+      "type": "sala-esquerda",
+      "x": 690,
+      "y": 1010
+    },
+    {
+      "id": "entrada",
+      "label": "Entrada",
+      "type": "cruzamento",
+      "x": 735,
+      "y": 1010
+    },
+    {
+      "id": "museu",
+      "label": "Museu",
+      "type": "sala-direita",
+      "x": 780,
+      "y": 1010
+    },
+    {
+      "id": "hall-1",
+      "label": "Hall-1",
+      "type": "cruzamento",
+      "x": 735,
+      "y": 800
+    },
+    {
+      "id": "hall-2",
+      "label": "Hall-2",
+      "type": "cruzamento",
+      "x": 735,
+      "y": 400
+    },
+    {
+      "id": "escada-1",
+      "label": "Escada-1",
+      "type": "escada",
+      "x": 500,
+      "y": 800
+    },
+    {
+      "id": "escada-2",
+      "label": "Escada-2",
+      "type": "escada",
+      "x": 500,
+      "y": 400
+    },
+    {
+      "id": "escada-3",
+      "label": "Escada-3",
+      "type": "escada",
+      "x": 200,
+      "y": 950
+    },
+    {
+      "id": "escada-4",
+      "label": "Escada-4",
+      "type": "escada",
+      "x": 200,
+      "y": 250
+    },
+    {
+      "id": "unidade-1-bloco-1-baixo-1",
+      "label": "unidade-1-bloco-1-baixo-1",
+      "type": "cruzamento",
+      "x": 500,
+      "y": 900
+    },
+    {
+      "id": "unidade-1-bloco-1-cima-1",
+      "label": "unidade-1-bloco-1-cima-1",
+      "type": "cruzamento",
+      "x": 500,
+      "y": 700
+    },
+    {
+      "id": "comunicacao",
+      "label": "comunicacao",
+      "type": "sala-direita",
+      "x": 500,
+      "y": 520
+    },
+    {
+      "id": "sala-de-reunioes",
+      "label": "sala-de-reunioes",
+      "type": "sala-direita",
+      "x": 500,
+      "y": 540
+    },
+    {
+      "id": "secretaria-academica",
+      "label": "secretaria-academica",
+      "type": "sala-direita",
+      "x": 500,
+      "y": 560
+    },
+    {
+      "id": "central-de-estagios",
+      "label": "central-de-estagios",
+      "type": "sala-direita",
+      "x": 500,
+      "y": 560
+    },
+    {
+      "id": "coordenacao-ciencia-da-computacao",
+      "label": "coordenacao-ciencia-da-computacao",
+      "type": "sala-direita",
+      "x": 500,
+      "y": 580
+    },
+    {
+      "id": "coordenacao-engenharia-de-software",
+      "label": "coordenacao-engenharia-de-software",
+      "type": "sala-direita",
+      "x": 500,
+      "y": 600
+    },
+    {
+      "id": "coordenacao-engenharia-de-producao",
+      "label": "coordenacao-engenharia-de-producao",
+      "type": "sala-direita",
+      "x": 500,
+      "y": 620
+    },
+    {
+      "id": "coordenacao-engenharia-mecanica",
+      "label": "coordenacao-engenharia-mecanica",
+      "type": "sala-direita",
+      "x": 500,
+      "y": 640
+    },
+    {
+      "id": "secretaria-de-coordenacao",
+      "label": "secretaria-de-coordenacao",
+      "type": "sala-esquerda",
+      "x": 500,
+      "y": 660
+    },
+    {
+      "id": "coordenacao-engenharia-civil",
+      "label": "coordenacao-engenharia-civil",
+      "type": "sala-direita",
+      "x": 500,
+      "y": 680
+    },
+    {
+      "id": "lab-informatica-2",
+      "label": "lab-informatica-2",
+      "type": "sala-esquerda",
+      "x": 200,
+      "y": 700
+    },
+    {
+      "id": "lab-informatica-1",
+      "label": "lab-informatica-1",
+      "type": "sala-esquerda",
+      "x": 200,
+      "y": 750
+    },
+    {
+      "id": "cantina",
+      "label": "cantina",
+      "type": "cantina",
+      "x": 200,
+      "y": 600
+    },
+    {
+      "id": "unidade-1-bloco-1-baixo-2",
+      "label": "unidade-1-bloco-1-baixo-2",
+      "type": "cruzamento",
+      "x": 200,
+      "y": 900
+    },
+    {
+      "id": "banheiro-masc-1",
+      "label": "banheiro-masc-1",
+      "type": "sala-direita",
+      "x": 500,
+      "y": 950
+    },
+    {
+      "id": "banheiro-fem-1",
+      "label": "banheiro-fem-1",
+      "type": "sala-direita",
+      "x": 500,
+      "y": 1000
+    },
+    {
+      "id": "unidade-1-bloco-2-baixo-1",
+      "label": "unidade-1-bloco-2-baixo-1",
+      "type": "cruzamento",
+      "x": 500,
+      "y": 500
+    },
+    {
+      "id": "unidade-1-bloco-2-cima-1",
+      "label": "unidade-1-bloco-2-cima-1",
+      "type": "cruzamento",
+      "x": 500,
+      "y": 300
+    },
+    {
+      "id": "unidade-1-bloco-2-cima-2",
+      "label": "unidade-1-bloco-2-cima-2",
+      "type": "cruzamento",
+      "x": 200,
+      "y": 300
+    },
+    {
+      "id": "lab-informatica-3",
+      "label": "lab-informatica-3",
+      "type": "sala-esquerda",
+      "x": 200,
+      "y": 500
+    },
+    {
+      "id": "lab-informatica-4",
+      "label": "lab-informatica-4",
+      "type": "sala-esquerda",
+      "x": 200,
+      "y": 450
+    },
+    {
+      "id": "sala-cultura",
+      "label": "sala-cultura",
+      "type": "sala-cima",
+      "x": 440,
+      "y": 300
+    },
+    {
+      "id": "sala-descanso",
+      "label": "sala-descanso",
+      "type": "sala-cima",
+      "x": 380,
+      "y": 300
+    },
+    {
+      "id": "lareb",
+      "label": "lareb",
+      "type": "sala-cima",
+      "x": 320,
+      "y": 300
+    },
+    {
+      "id": "lab-de-caracterizacao-de-materiais",
+      "label": "lab-de-caracterizacao-de-materiais",
+      "type": "sala-cima",
+      "x": 260,
+      "y": 300
+    },
+    {
+      "id": "banheiro-masc-2",
+      "label": "banheiro-masc-2",
+      "type": "sala-direita",
+      "x": 500,
+      "y": 250
+    },
+    {
+      "id": "banheiro-fem-2",
+      "label": "banheiro-fem-2",
+      "type": "sala-direita",
+      "x": 500,
+      "y": 200
+    },
+    {
+      "id": "lab-fisica",
+      "label": "lab-fisica",
+      "type": "sala-baixo",
+      "x": 450,
+      "y": 900
+    },
+    {
+      "id": "lab-quimica",
+      "label": "lab-quimica",
+      "type": "sala-baixo",
+      "x": 350,
+      "y": 900
+    },
+    {
+      "id": "lab-informatica-auxiliar",
+      "label": "lab-informatica-auxiliar",
+      "type": "sala-baixo",
+      "x": 250,
+      "y": 900
+    },
+    {
+      "id": "secretaria-geral",
+      "label": "secretaria-geral",
+      "type": "sala-cima",
+      "x": 450,
+      "y": 700
+    },
+    {
+      "id": "sala-9",
+      "label": "sala-9",
+      "type": "sala-cima",
+      "x": 350,
+      "y": 700
+    },
+    {
+      "id": "sala-10",
+      "label": "sala-10",
+      "type": "sala-cima",
+      "x": 250,
+      "y": 700
+    },
+    {
+      "id": "sala-11",
+      "label": "sala-11",
+      "type": "sala-baixo",
+      "x": 440,
+      "y": 500
+    },
+    {
+      "id": "sala-12",
+      "label": "sala-12",
+      "type": "sala-baixo",
+      "x": 380,
+      "y": 500
+    },
+    {
+      "id": "sala-13",
+      "label": "sala-13",
+      "type": "sala-baixo",
+      "x": 320,
+      "y": 500
+    },
+    {
+      "id": "sala-14",
+      "label": "sala-14",
+      "type": "sala-baixo",
+      "x": 260,
+      "y": 500
+    }
+  ],
+  "arestas": [
+    {
+      "origem": "portaria",
+      "destino": "entrada"
+    },
+    {
+      "origem": "museu",
+      "destino": "entrada"
+    },
+    {
+      "origem": "entrada",
+      "destino": "hall-1"
+    },
+    {
+      "origem": "hall-1",
+      "destino": "hall-2"
+    },
+    {
+      "origem": "hall-1",
+      "destino": "escada-1"
+    },
+    {
+      "origem": "hall-2",
+      "destino": "escada-2"
+    },
+    {
+      "origem": "escada-1",
+      "destino": "unidade-1-bloco-1-cima-1"
+    },
+    {
+      "origem": "escada-1",
+      "destino": "unidade-1-bloco-1-baixo-1"
+    },
+    {
+      "origem": "unidade-1-bloco-1-baixo-1",
+      "destino": "lab-fisica"
+    },
+    {
+      "origem": "lab-fisica",
+      "destino": "lab-quimica"
+    },
+    {
+      "origem": "lab-quimica",
+      "destino": "lab-informatica-auxiliar"
+    },
+    {
+      "origem": "lab-informatica-auxiliar",
+      "destino": "unidade-1-bloco-1-baixo-2"
+    },
+    {
+      "origem": "unidade-1-bloco-1-cima-1",
+      "destino": "secretaria-geral"
+    },
+    {
+      "origem": "secretaria-geral",
+      "destino": "sala-9"
+    },
+    {
+      "origem": "sala-9",
+      "destino": "sala-10"
+    },
+    {
+      "origem": "sala-10",
+      "destino": "lab-informatica-2"
+    },
+    {
+      "origem": "unidade-1-bloco-1-baixo-2",
+      "destino": "lab-informatica-1"
+    },
+    {
+      "origem": "lab-informatica-1",
+      "destino": "lab-informatica-2"
+    },
+    {
+      "origem": "lab-informatica-2",
+      "destino": "cantina"
+    },
+    {
+      "origem": "unidade-1-bloco-1-baixo-1",
+      "destino": "banheiro-masc-1"
+    },
+    {
+      "origem": "banheiro-masc-1",
+      "destino": "banheiro-fem-1"
+    },
+    {
+      "origem": "escada-2",
+      "destino": "unidade-1-bloco-2-cima-1"
+    },
+    {
+      "origem": "escada-2",
+      "destino": "unidade-1-bloco-2-baixo-1"
+    },
+    {
+      "origem": "unidade-1-bloco-2-cima-1",
+      "destino": "sala-cultura"
+    },
+    {
+      "origem": "unidade-1-bloco-2-baixo-1",
+      "destino": "sala-11"
+    },
+    {
+      "origem": "sala-11",
+      "destino": "sala-12"
+    },
+    {
+      "origem": "sala-12",
+      "destino": "sala-13"
+    },
+    {
+      "origem": "sala-13",
+      "destino": "sala-14"
+    },
+    {
+      "origem": "sala-14",
+      "destino": "lab-informatica-3"
+    },
+    {
+      "origem": "lab-informatica-3",
+      "destino": "lab-informatica-4"
+    },
+    {
+      "origem": "lab-informatica-3",
+      "destino": "cantina"
+    },
+    {
+      "origem": "banheiro-masc-2",
+      "destino": "banheiro-fem-2"
+    },
+    {
+      "origem": "banheiro-masc-2",
+      "destino": "unidade-1-bloco-2-cima-1"
+    },
+    {
+      "origem": "sala-cultura",
+      "destino": "sala-descanso"
+    },
+    {
+      "origem": "sala-descanso",
+      "destino": "lareb"
+    },
+    {
+      "origem": "lareb",
+      "destino": "lab-de-caracterizacao-de-materiais"
+    },
+    {
+      "origem": "lab-de-caracterizacao-de-materiais",
+      "destino": "unidade-1-bloco-2-cima-2"
+    },
+    {
+      "origem": "unidade-1-bloco-2-cima-2",
+      "destino": "lab-informatica-4"
+    },
+    {
+      "origem": "unidade-1-bloco-2-cima-2",
+      "destino": "escada-4"
+    },
+    {
+      "origem": "unidade-1-bloco-1-baixo-2",
+      "destino": "escada-3"
+    },
+    {
+      "origem": "unidade-1-bloco-1-cima-1",
+      "destino": "coordenacao-engenharia-civil"
+    },
+    {
+      "origem": "unidade-1-bloco-2-baixo-1",
+      "destino": "comunicacao"
+    },
+    {
+      "origem": "comunicacao",
+      "destino": "sala-de-reunioes"
+    },
+    {
+      "origem": "sala-de-reunioes",
+      "destino": "secretaria-academica"
+    },
+    {
+      "origem": "sala-de-reunioes",
+      "destino": "central-de-estagios"
+    },
+    {
+      "origem": "central-de-estagios",
+      "destino": "coordenacao-ciencia-da-computacao"
+    },
+    {
+      "origem": "secretaria-academica",
+      "destino": "coordenacao-ciencia-da-computacao"
+    },
+    {
+      "origem": "coordenacao-ciencia-da-computacao",
+      "destino": "coordenacao-engenharia-de-software"
+    },
+    {
+      "origem": "coordenacao-engenharia-de-software",
+      "destino": "coordenacao-engenharia-de-producao"
+    },
+    {
+      "origem": "coordenacao-engenharia-de-producao",
+      "destino": "coordenacao-engenharia-mecanica"
+    },
+    {
+      "origem": "coordenacao-engenharia-mecanica",
+      "destino": "secretaria-de-coordenacao"
+    },
+    {
+      "origem": "secretaria-de-coordenacao",
+      "destino": "coordenacao-engenharia-civil"
+    }
+  ]
+}
