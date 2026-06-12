@@ -42,39 +42,34 @@ function App() {
   return (
     <div
       style={{
-        minHeight: "100vh",
+        width: "100vw",
+        height: "100vh",
         background: "#0d0d1a",
         fontFamily: "'Segoe UI', sans-serif",
-        padding: "24px",
         boxSizing: "border-box",
+        margin: 0,
+        padding: 0,
+        overflow: "hidden",
       }}
     >
-      {/* Header */}
-      <div style={{ marginBottom: "20px" }}>
-        <h1
-          style={{
-            color: "#e0e8ff",
-            fontSize: "22px",
-            fontWeight: 700,
-            margin: 0,
-            letterSpacing: "1px",
-          }}
-        >
-          🗺️ Mapa de Rotas 3D
-        </h1>
-        <p style={{ color: "#4a6fa5", fontSize: "13px", margin: "4px 0 0" }}>
-          Selecione origem e destino para visualizar a menor rota
-        </p>
-      </div>
-
-      {/* Controls */}
+      {/* Painel de Controles Flutuante */}
       <div
         style={{
+          position: "absolute",
+          top: "20px",
+          left: "20px",
+          zIndex: 10, // Fica por cima do mapa 3D
           display: "flex",
           gap: "12px",
           alignItems: "center",
-          marginBottom: "20px",
           flexWrap: "wrap",
+          background: "rgba(13, 13, 26, 0.75)", // Fundo semitransparente
+          padding: "16px",
+          borderRadius: "12px",
+          backdropFilter: "blur(10px)", // Efeito de desfoque moderno
+          border: "1px solid rgba(45, 74, 122, 0.5)",
+          boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.37)",
+          maxWidth: "calc(100vw - 40px)", // Evita que saia da tela no mobile
         }}
       >
         <select
@@ -89,8 +84,6 @@ function App() {
             </option>
           ))}
         </select>
-
-        <span style={{ color: "#2d4a7a", fontSize: "18px" }}>→</span>
 
         <select
           style={selectStyle}
@@ -130,7 +123,7 @@ function App() {
         )}
       </div>
 
-      {/* 3D Map */}
+      {/* Mapa 3D (Ocupando o fundo inteiro) */}
       <FloorMap3D graph={graph} rota={rota} />
     </div>
   );

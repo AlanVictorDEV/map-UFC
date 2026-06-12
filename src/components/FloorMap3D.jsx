@@ -204,7 +204,7 @@ function createEscada(scene, v, isOnRoute) {
   });
 
   for (let i = 0; i < 6; i++) {
-    const step = new THREE.Mesh(new THREE.BoxGeometry(22, 4, 12), stairMat);
+    const step = new THREE.Mesh(new THREE.BoxGeometry(22, 4, 25), stairMat);
     step.position.set(-i * 7, 2 + i * 4, 0);
     group.add(step);
   }
@@ -347,7 +347,6 @@ export default function FloorMap3D({ graph, rota = [], showLabels = true }) {
     // Cena
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(COLORS.background);
-    scene.fog = new THREE.Fog(COLORS.fog, 800, 2000);
 
     // Câmera
     const camera = new THREE.PerspectiveCamera(70, W / H, 1, 3000);
@@ -368,7 +367,7 @@ export default function FloorMap3D({ graph, rota = [], showLabels = true }) {
     // Chão
     const floorMesh = addMesh(
       scene,
-      new THREE.PlaneGeometry(1200, 1400),
+      new THREE.PlaneGeometry(15000, 15000),
       new THREE.MeshStandardMaterial({
         color: 0x2e7d32,
         roughness: 1,
@@ -494,12 +493,13 @@ export default function FloorMap3D({ graph, rota = [], showLabels = true }) {
     <div
       ref={mountRef}
       style={{
-        width: "100%",
-        height: "100%",
-        minHeight: "500px",
-        borderRadius: "16px",
+        width: "100vw",
+        height: "100vh",
+        position: "fixed",
+        top: 0,
+        left: 0,
+        zIndex: 1, // Fica no fundo
         overflow: "hidden",
-        boxShadow: "0 8px 40px rgba(0,0,0,0.5)",
         cursor: "grab",
       }}
       onMouseDown={(e) => (e.currentTarget.style.cursor = "grabbing")}
