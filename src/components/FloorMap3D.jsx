@@ -44,9 +44,12 @@ function buildRouteSet(rota = []) {
 
 /** Cria a aresta (corredor) entre dois vértices */
 function createEdge(scene, p1, p2, isOnRoute) {
-  const length = p1.distanceTo(p2);
-  const width = isOnRoute ? 30 : 20;
-  const geo = new THREE.BoxGeometry(length, 2, width);
+  const length = p1.distanceTo(p2) + 20;
+  const width = isOnRoute ? 25 : 20;
+  const height = isOnRoute ? 3 : 2;
+
+  const geo = new THREE.BoxGeometry(length, height, width);
+
   const mat = new THREE.MeshStandardMaterial({
     color: isOnRoute ? 0xff4444 : 0x404040,
     roughness: 0.9,
@@ -62,18 +65,6 @@ function createEdge(scene, p1, p2, isOnRoute) {
     receiveShadow: true,
   });
   mesh.rotation.y = -angle;
-
-  if (isOnRoute) {
-    const glowGeo = new THREE.BoxGeometry(length, 0.5, width + 8);
-    const glowMat = new THREE.MeshBasicMaterial({
-      color: 0xff5555,
-      transparent: true,
-      opacity: 0.25,
-    });
-    const glow = addMesh(scene, glowGeo, glowMat, { position: mid.clone() });
-    glow.position.y += 1.5;
-    glow.rotation.y = -angle;
-  }
 }
 
 /** Cria o grupo da cantina */
@@ -257,7 +248,7 @@ function createNode(scene, v, color, isOnRoute, isStart, isEnd) {
 
   if (isOnRoute) {
     const ring = new THREE.Mesh(
-      new THREE.TorusGeometry(radius * 2.2, 2, 8, 32),
+      new THREE.TorusGeometry(radius * 2.2, 100, 8, 32),
       new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0.6 }),
     );
     ring.position.set(v.x, height + radius * 0.8, v.y);

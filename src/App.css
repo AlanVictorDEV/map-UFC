@@ -1,0 +1,66 @@
+.app {
+  width: 100vw;
+  height: 100vh;
+  background: #0d0d1a;
+  font-family: "Segoe UI", sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.control-panel {
+  position: absolute;
+  width: 100%;
+
+  z-index: 10;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  background: transparent;
+  padding: 16px;
+}
+
+.select-field {
+  background: white;
+  color: black;
+  border: 1px solid #2e2e2e;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 14px;
+  cursor: pointer;
+  outline: none;
+}
+
+.route-button {
+  background: rgb(38, 125, 255);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: transform 0.1s;
+}
+
+.route-button:active {
+  transform: scale(0.97);
+}
+
+.route-info {
+  color: #ff6b81;
+  font-size: 13px;
+  background: rgba(255, 71, 87, 0.1);
+  border: 1px solid rgba(255, 71, 87, 0.3);
+  border-radius: 6px;
+  padding: 6px 12px;
+}
+@media (max-width: 768px) {
+  .route-button,
+  .select-field {
+    width: 100%;
+  }
+}
