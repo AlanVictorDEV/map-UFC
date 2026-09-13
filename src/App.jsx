@@ -9,6 +9,13 @@ function App() {
   const [destino, setDestino] = useState("");
   const [rota, setRota] = useState([]);
 
+  // Apenas locais que podem ser escolhidos pelo usuário.
+  // Vértices do tipo "cruzamento" continuam no grafo,
+  // mas não aparecem como origem/destino.
+  const locaisDisponiveis = graph.vertices.filter(
+    (v) => v.tipo !== "cruzamento" && v.tipo !== "escada",
+  );
+
   function calcularRota() {
     if (!origem || !destino) return;
 
@@ -19,33 +26,41 @@ function App() {
   return (
     <div className="app">
       <div className="control-panel">
+        {/* ORIGEM */}
         <select
           className="select-field"
           value={origem}
           onChange={(e) => setOrigem(e.target.value)}
         >
-          <option value=""> Origem</option>
-          {graph.vertices.map((v) => (
+          <option value="">Origem</option>
+
+          {locaisDisponiveis.map((v) => (
             <option key={v.id} value={v.id}>
               {v.label || v.nome || v.id}
             </option>
           ))}
         </select>
 
+        {/* DESTINO */}
         <select
           className="select-field"
           value={destino}
           onChange={(e) => setDestino(e.target.value)}
         >
           <option value="">Destino</option>
-          {graph.vertices.map((v) => (
+
+          {locaisDisponiveis.map((v) => (
             <option key={v.id} value={v.id}>
               {v.label || v.nome || v.id}
             </option>
           ))}
         </select>
 
-        <button className="route-button" onClick={calcularRota}>
+        <button
+          className="route-button"
+          onClick={calcularRota}
+          disabled={!origem || !destino}
+        >
           Buscar Rota
         </button>
       </div>

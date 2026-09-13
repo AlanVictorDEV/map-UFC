@@ -2,342 +2,705 @@
   "vertices": [
     {
       "id": "portaria",
-      "label": "Portaria",
-      "type": "sala-esquerda",
+      "nome": "Portaria",
+      "tipo": "sala-esquerda",
+      "unidade": "A",
+      "andar": 0,
       "x": 690,
       "y": 1010
     },
     {
       "id": "entrada",
-      "label": "Entrada",
-      "type": "cruzamento",
+      "nome": "Entrada",
+      "tipo": "cruzamento",
+      "unidade": "A",
+      "andar": 0,
       "x": 735,
       "y": 1010
     },
     {
       "id": "museu",
-      "label": "Museu",
-      "type": "sala-direita",
+      "nome": "Museu",
+      "tipo": "sala-direita",
+      "unidade": "A",
+      "andar": 0,
       "x": 780,
       "y": 1010
     },
     {
       "id": "hall-1",
-      "label": "Hall-1",
-      "type": "cruzamento",
+      "nome": "Hall 1",
+      "tipo": "cruzamento",
+      "unidade": "A",
+      "andar": 0,
       "x": 735,
       "y": 800
     },
     {
       "id": "hall-2",
-      "label": "Hall-2",
-      "type": "cruzamento",
+      "nome": "Hall 2",
+      "tipo": "cruzamento",
+      "unidade": "A",
+      "andar": 0,
       "x": 735,
       "y": 400
     },
     {
       "id": "escada-1",
-      "label": "Escada-1",
-      "type": "escada",
+      "nome": "Escada 1",
+      "tipo": "escada",
+      "unidade": "A",
+      "andar": 0,
       "x": 500,
       "y": 800
     },
     {
       "id": "escada-2",
-      "label": "Escada-2",
-      "type": "escada",
+      "nome": "Escada 2",
+      "tipo": "escada",
+      "unidade": "A",
+      "andar": 0,
       "x": 500,
       "y": 400
     },
     {
       "id": "escada-3",
-      "label": "Escada-3",
-      "type": "escada",
+      "nome": "Escada 3",
+      "tipo": "escada",
+      "unidade": "A",
+      "andar": 0,
       "x": 200,
       "y": 950
     },
     {
       "id": "escada-4",
-      "label": "Escada-4",
-      "type": "escada",
+      "nome": "Escada 4",
+      "tipo": "escada",
+      "unidade": "A",
+      "andar": 0,
       "x": 200,
       "y": 250
     },
     {
       "id": "unidade-1-bloco-1-baixo-1",
-      "label": "unidade-1-bloco-1-baixo-1",
-      "type": "cruzamento",
+      "nome": "unidade 1 bloco 1 baixo 1",
+      "tipo": "cruzamento",
+      "unidade": "A",
+      "andar": 0,
       "x": 500,
       "y": 900
     },
     {
       "id": "unidade-1-bloco-1-cima-1",
-      "label": "unidade-1-bloco-1-cima-1",
-      "type": "cruzamento",
+      "nome": "unidade 1 bloco 1 cima 1",
+      "tipo": "cruzamento",
+      "unidade": "A",
+      "andar": 0,
       "x": 500,
       "y": 700
     },
     {
       "id": "comunicacao",
-      "label": "comunicacao",
-      "type": "sala-direita",
+      "nome": "comunicacao",
+      "tipo": "sala-direita",
+      "unidade": "A",
+      "andar": 0,
       "x": 500,
       "y": 520
     },
     {
       "id": "sala-de-reunioes",
-      "label": "sala-de-reunioes",
-      "type": "sala-direita",
+      "nome": "sala de reunioes",
+      "tipo": "sala-direita",
+      "unidade": "A",
+      "andar": 0,
       "x": 500,
       "y": 540
     },
     {
       "id": "secretaria-academica",
-      "label": "secretaria-academica",
-      "type": "sala-direita",
+      "nome": "secretaria academica",
+      "tipo": "sala-direita",
+      "unidade": "A",
+      "andar": 0,
       "x": 500,
       "y": 560
     },
     {
       "id": "central-de-estagios",
-      "label": "central-de-estagios",
-      "type": "sala-direita",
+      "nome": "central de estagios",
+      "tipo": "sala-direita",
+      "unidade": "A",
+      "andar": 0,
       "x": 500,
       "y": 560
     },
     {
       "id": "coordenacao-ciencia-da-computacao",
-      "label": "coordenacao-ciencia-da-computacao",
-      "type": "sala-direita",
+      "nome": "coordenacao ciencia da computacao",
+      "tipo": "sala-direita",
+      "unidade": "A",
+      "andar": 0,
       "x": 500,
       "y": 580
     },
     {
       "id": "coordenacao-engenharia-de-software",
-      "label": "coordenacao-engenharia-de-software",
-      "type": "sala-direita",
+      "nome": "coordenacao engenharia de software",
+      "tipo": "sala-direita",
+      "unidade": "A",
+      "andar": 0,
       "x": 500,
       "y": 600
     },
     {
       "id": "coordenacao-engenharia-de-producao",
-      "label": "coordenacao-engenharia-de-producao",
-      "type": "sala-direita",
+      "nome": "coordenacao engenharia de producao",
+      "tipo": "sala-direita",
+      "unidade": "A",
+      "andar": 0,
       "x": 500,
       "y": 620
     },
     {
       "id": "coordenacao-engenharia-mecanica",
-      "label": "coordenacao-engenharia-mecanica",
-      "type": "sala-direita",
+      "nome": "coordenacao engenharia mecanica",
+      "tipo": "sala-direita",
+      "unidade": "A",
+      "andar": 0,
       "x": 500,
       "y": 640
     },
     {
       "id": "secretaria-de-coordenacao",
-      "label": "secretaria-de-coordenacao",
-      "type": "sala-esquerda",
+      "nome": "secretaria de coordenacao",
+      "tipo": "sala-esquerda",
+      "unidade": "A",
+      "andar": 0,
       "x": 500,
       "y": 660
     },
     {
       "id": "coordenacao-engenharia-civil",
-      "label": "coordenacao-engenharia-civil",
-      "type": "sala-direita",
+      "nome": "coordenacao engenharia civil",
+      "tipo": "sala-direita",
+      "unidade": "A",
+      "andar": 0,
       "x": 500,
       "y": 680
     },
     {
       "id": "lab-informatica-2",
-      "label": "lab-informatica-2",
-      "type": "sala-esquerda",
+      "nome": "lab informatica 2",
+      "tipo": "sala-esquerda",
+      "unidade": "A",
+      "andar": 0,
       "x": 200,
       "y": 700
     },
     {
       "id": "lab-informatica-1",
-      "label": "lab-informatica-1",
-      "type": "sala-esquerda",
+      "nome": "lab informatica 1",
+      "tipo": "sala-esquerda",
+      "unidade": "A",
+      "andar": 0,
       "x": 200,
       "y": 750
     },
     {
       "id": "cantina",
-      "label": "cantina",
-      "type": "cantina",
+      "nome": "cantina",
+      "tipo": "cantina",
+      "unidade": "A",
+      "andar": 0,
       "x": 200,
       "y": 600
     },
     {
       "id": "unidade-1-bloco-1-baixo-2",
-      "label": "unidade-1-bloco-1-baixo-2",
-      "type": "cruzamento",
+      "nome": "unidade 1 bloco 1 baixo 2",
+      "tipo": "cruzamento",
+      "unidade": "A",
+      "andar": 0,
       "x": 200,
       "y": 900
     },
     {
       "id": "banheiro-masc-1",
-      "label": "banheiro-masc-1",
-      "type": "sala-direita",
+      "nome": "banheiro masc 1",
+      "tipo": "sala-direita",
+      "unidade": "A",
+      "andar": 0,
       "x": 500,
       "y": 950
     },
     {
       "id": "banheiro-fem-1",
-      "label": "banheiro-fem-1",
-      "type": "sala-direita",
+      "nome": "banheiro fem 1",
+      "tipo": "sala-direita",
+      "unidade": "A",
+      "andar": 0,
       "x": 500,
       "y": 1000
     },
     {
       "id": "unidade-1-bloco-2-baixo-1",
-      "label": "unidade-1-bloco-2-baixo-1",
-      "type": "cruzamento",
+      "nome": "unidade 1 bloco 2 baixo 1",
+      "tipo": "cruzamento",
+      "unidade": "A",
+      "andar": 0,
       "x": 500,
       "y": 500
     },
     {
       "id": "unidade-1-bloco-2-cima-1",
-      "label": "unidade-1-bloco-2-cima-1",
-      "type": "cruzamento",
+      "nome": "unidade 1 bloco 2 cima 1",
+      "tipo": "cruzamento",
+      "unidade": "A",
+      "andar": 0,
       "x": 500,
       "y": 300
     },
     {
       "id": "unidade-1-bloco-2-cima-2",
-      "label": "unidade-1-bloco-2-cima-2",
-      "type": "cruzamento",
+      "nome": "unidade 1 bloco 2 cima 2",
+      "tipo": "cruzamento",
+      "unidade": "A",
+      "andar": 0,
       "x": 200,
       "y": 300
     },
     {
       "id": "lab-informatica-3",
-      "label": "lab-informatica-3",
-      "type": "sala-esquerda",
+      "nome": "lab informatica 3",
+      "tipo": "sala-esquerda",
+      "unidade": "A",
+      "andar": 0,
       "x": 200,
       "y": 500
     },
     {
       "id": "lab-informatica-4",
-      "label": "lab-informatica-4",
-      "type": "sala-esquerda",
+      "nome": "lab informatica 4",
+      "tipo": "sala-esquerda",
+      "unidade": "A",
+      "andar": 0,
       "x": 200,
       "y": 450
     },
     {
       "id": "sala-cultura",
-      "label": "sala-cultura",
-      "type": "sala-cima",
+      "nome": "sala cultura",
+      "tipo": "sala-cima",
+      "unidade": "A",
+      "andar": 0,
       "x": 440,
       "y": 300
     },
     {
       "id": "sala-descanso",
-      "label": "sala-descanso",
-      "type": "sala-cima",
+      "nome": "sala descanso",
+      "tipo": "sala-cima",
+      "unidade": "A",
+      "andar": 0,
       "x": 380,
       "y": 300
     },
     {
       "id": "lareb",
-      "label": "lareb",
-      "type": "sala-cima",
+      "nome": "lareb",
+      "tipo": "sala-cima",
+      "unidade": "A",
+      "andar": 0,
       "x": 320,
       "y": 300
     },
     {
       "id": "lab-de-caracterizacao-de-materiais",
-      "label": "lab-de-caracterizacao-de-materiais",
-      "type": "sala-cima",
+      "nome": "lab de caracterizacao de materiais",
+      "tipo": "sala-cima",
+      "unidade": "A",
+      "andar": 0,
       "x": 260,
       "y": 300
     },
     {
       "id": "banheiro-masc-2",
-      "label": "banheiro-masc-2",
-      "type": "sala-direita",
+      "nome": "banheiro masc 2",
+      "tipo": "sala-direita",
+      "unidade": "A",
+      "andar": 0,
       "x": 500,
       "y": 250
     },
     {
       "id": "banheiro-fem-2",
-      "label": "banheiro-fem-2",
-      "type": "sala-direita",
+      "nome": "banheiro fem 2",
+      "tipo": "sala-direita",
+      "unidade": "A",
+      "andar": 0,
       "x": 500,
       "y": 200
     },
     {
       "id": "lab-fisica",
-      "label": "lab-fisica",
-      "type": "sala-baixo",
+      "nome": "lab fisica",
+      "tipo": "sala-baixo",
+      "unidade": "A",
+      "andar": 0,
       "x": 450,
       "y": 900
     },
     {
       "id": "lab-quimica",
-      "label": "lab-quimica",
-      "type": "sala-baixo",
+      "nome": "lab quimica",
+      "tipo": "sala-baixo",
+      "unidade": "A",
+      "andar": 0,
       "x": 350,
       "y": 900
     },
     {
       "id": "lab-informatica-auxiliar",
-      "label": "lab-informatica-auxiliar",
-      "type": "sala-baixo",
+      "nome": "lab informatica auxiliar",
+      "tipo": "sala-baixo",
+      "unidade": "A",
+      "andar": 0,
       "x": 250,
       "y": 900
     },
     {
       "id": "secretaria-geral",
-      "label": "secretaria-geral",
-      "type": "sala-cima",
+      "nome": "secretaria geral",
+      "tipo": "sala-cima",
+      "unidade": "A",
+      "andar": 0,
       "x": 450,
       "y": 700
     },
     {
       "id": "sala-9",
-      "label": "sala-9",
-      "type": "sala-cima",
+      "nome": "sala 9",
+      "tipo": "sala-cima",
+      "unidade": "A",
+      "andar": 0,
       "x": 350,
       "y": 700
     },
     {
       "id": "sala-10",
-      "label": "sala-10",
-      "type": "sala-cima",
+      "nome": "sala 10",
+      "tipo": "sala-cima",
+      "unidade": "A",
+      "andar": 0,
       "x": 250,
       "y": 700
     },
     {
       "id": "sala-11",
-      "label": "sala-11",
-      "type": "sala-baixo",
+      "nome": "sala 11",
+      "tipo": "sala-baixo",
+      "unidade": "A",
+      "andar": 0,
       "x": 440,
       "y": 500
     },
     {
       "id": "sala-12",
-      "label": "sala-12",
-      "type": "sala-baixo",
+      "nome": "sala 12",
+      "tipo": "sala-baixo",
+      "unidade": "A",
+      "andar": 0,
       "x": 380,
       "y": 500
     },
     {
       "id": "sala-13",
-      "label": "sala-13",
-      "type": "sala-baixo",
+      "nome": "sala 13",
+      "tipo": "sala-baixo",
+      "unidade": "A",
+      "andar": 0,
       "x": 320,
       "y": 500
     },
     {
       "id": "sala-14",
-      "label": "sala-14",
-      "type": "sala-baixo",
+      "nome": "sala 14",
+      "tipo": "sala-baixo",
+      "unidade": "A",
+      "andar": 0,
       "x": 260,
       "y": 500
+    },
+
+    {
+      "id": "escada-5",
+      "nome": "Escada 5",
+      "tipo": "escada",
+      "unidade": "B",
+      "andar": 0,
+      "x": 1000,
+      "y": 800
+    },
+    {
+      "id": "escada-6",
+      "nome": "Escada 6",
+      "tipo": "escada",
+      "unidade": "B",
+      "andar": 0,
+      "x": 1000,
+      "y": 400
+    },
+    {
+      "id": "biblioteca",
+      "nome": "Biblioteca",
+      "tipo": "sala-esquerda",
+      "unidade": "B",
+      "andar": 0,
+      "x": 1000,
+      "y": 720
+    },
+    {
+      "id": "unidade-2-bloco-1-cima-1",
+      "nome": "unidade 2 bloco 1 cima 1",
+      "tipo": "cruzamento",
+      "unidade": "B",
+      "andar": 0,
+      "x": 1000,
+      "y": 700
+    },
+    {
+      "id": "unidade-2-bloco-1-baixo-1",
+      "nome": "unidade 2 bloco 1 baixo 1",
+      "tipo": "cruzamento",
+      "unidade": "B",
+      "andar": 0,
+      "x": 1000,
+      "y": 900
+    },
+    {
+      "id": "unidade-2-bloco-1-cima-2",
+      "nome": "unidade 2 bloco 1 cima 2",
+      "tipo": "cruzamento",
+      "unidade": "B",
+      "andar": 0,
+      "x": 1200,
+      "y": 700
+    },
+    {
+      "id": "unidade-2-bloco-2-baixo-2",
+      "nome": "unidade 2 bloco 1 baixo 2",
+      "tipo": "cruzamento",
+      "unidade": "B",
+      "andar": 0,
+      "x": 1200,
+      "y": 500
+    },
+    {
+      "id": "unidade-2-bloco-2-cima-2",
+      "nome": "unidade 2 bloco 1 cima 2",
+      "tipo": "cruzamento",
+      "unidade": "B",
+      "andar": 0,
+      "x": 1200,
+      "y": 300
+    },
+    {
+      "id": "escada-7",
+      "nome": "escada 7",
+      "tipo": "escada",
+      "unidade": "B",
+      "andar": 0,
+      "x": 1200,
+      "y": 250
+    },
+    {
+      "id": "ru",
+      "nome": "Restaurante universitário",
+      "tipo": "RU",
+      "unidade": "B",
+      "andar": 0,
+      "x": 1700,
+      "y": -300
+    },
+    {
+      "id": "learningLab",
+      "nome": "LearningLab",
+      "tipo": "sala-direita",
+      "unidade": "B",
+      "andar": 0,
+      "x": 1200,
+      "y": 500
+    },
+    {
+      "id": "sala-de-estudos-em-grupo",
+      "nome": "Sala de estudos em grupo",
+      "tipo": "sala-cima",
+      "unidade": "B",
+      "andar": 0,
+      "x": 1020,
+      "y": 700
+    },
+    {
+      "id": "lti",
+      "nome": "LTI",
+      "tipo": "sala-cima",
+      "unidade": "B",
+      "andar": 0,
+      "x": 1090,
+      "y": 700
+    },
+    {
+      "id": "nemo",
+      "nome": "NEMO",
+      "tipo": "sala-cima",
+      "unidade": "B",
+      "andar": 0,
+      "x": 1140,
+      "y": 700
+    },
+    {
+      "id": "nerds",
+      "nome": "NERDS",
+      "tipo": "sala-cima",
+      "unidade": "B",
+      "andar": 0,
+      "x": 1170,
+      "y": 700
+    },
+    {
+      "id": "banheiro-masc-3",
+      "nome": "banheiro masc 3",
+      "tipo": "sala-esquerda",
+      "unidade": "B",
+      "andar": 0,
+      "x": 1000,
+      "y": 950
+    },
+    {
+      "id": "banheiro-fem-3",
+      "nome": "banheiro fem 3",
+      "tipo": "sala-esquerda",
+      "unidade": "B",
+      "andar": 0,
+      "x": 1000,
+      "y": 1000
+    },
+    {
+      "id": "banheiro-masc-4",
+      "nome": "banheiro masc 4",
+      "tipo": "sala-esquerda",
+      "unidade": "B",
+      "andar": 0,
+      "x": 1000,
+      "y": 200
+    },
+    {
+      "id": "banheiro-fem-4",
+      "nome": "banheiro fem 4",
+      "tipo": "sala-esquerda",
+      "unidade": "B",
+      "andar": 0,
+      "x": 1000,
+      "y": 150
+    },
+    {
+      "id": "unidade-2-bloco-2-cima-1",
+      "nome": "unidade 2 bloco 2 cima 1",
+      "tipo": "cruzamento",
+      "unidade": "B",
+      "andar": 0,
+      "x": 1000,
+      "y": 300
     }
   ],
   "arestas": [
+    {
+      "origem": "escada-7",
+      "destino": "ru"
+    },
+    {
+      "origem": "learningLab",
+      "destino": "unidade-2-bloco-2-cima-2"
+    },
+    {
+      "origem": "unidade-2-bloco-2-cima-2",
+      "destino": "escada-7"
+    },
+    {
+      "origem": "unidade-2-bloco-1-cima-2",
+      "destino": "unidade-2-bloco-2-baixo-2"
+    },
+    {
+      "origem": "unidade-2-bloco-2-baixo-2",
+      "destino": "learningLab"
+    },
+    {
+      "origem": "sala-de-estudos-em-grupo",
+      "destino": "lti"
+    },
+    {
+      "origem": "lti",
+      "destino": "nemo"
+    },
+    {
+      "origem": "nemo",
+      "destino": "nerds"
+    },
+    {
+      "origem": "nerds",
+      "destino": "unidade-2-bloco-1-cima-2"
+    },
+    {
+      "origem": "unidade-2-bloco-1-baixo-1",
+      "destino": "banheiro-masc-3"
+    },
+
+    {
+      "origem": "escada-6",
+      "destino": "unidade-2-bloco-2-cima-1"
+    },
+    {
+      "origem": "unidade-2-bloco-2-cima-1",
+      "destino": "banheiro-masc-4"
+    },
+    {
+      "origem": "banheiro-masc-4",
+      "destino": "banheiro-fem-4"
+    },
+
+    {
+      "origem": "banheiro-masc-3",
+      "destino": "banheiro-fem-3"
+    },
+    {
+      "origem": "hall-1",
+      "destino": "escada-5"
+    },
+    {
+      "origem": "hall-2",
+      "destino": "escada-6"
+    },
+    {
+      "origem": "escada-5",
+      "destino": "biblioteca"
+    },
+    {
+      "origem": "biblioteca",
+      "destino": "unidade-2-bloco-1-cima-1"
+    },
+    {
+      "origem": "unidade-2-bloco-1-cima-1",
+      "destino": "escada-6"
+    },
+    {
+      "origem": "unidade-2-bloco-1-cima-1",
+      "destino": "sala-de-estudos-em-grupo"
+    },
+    {
+      "origem": "escada-5",
+      "destino": "unidade-2-bloco-1-baixo-1"
+    },
     {
       "origem": "portaria",
       "destino": "entrada"
