@@ -27,7 +27,12 @@ function App() {
     <div className="app">
       <div className="control-panel">
         {/* ORIGEM */}
+        <label htmlFor="select-origem" className="sr-only">
+          Origem
+        </label>
+
         <select
+          id="select-origem"
           className="select-field"
           value={origem}
           onChange={(e) => setOrigem(e.target.value)}
@@ -42,7 +47,12 @@ function App() {
         </select>
 
         {/* DESTINO */}
+        <label htmlFor="select-destino" className="sr-only">
+          Destino
+        </label>
+
         <select
+          id="select-destino"
           className="select-field"
           value={destino}
           onChange={(e) => setDestino(e.target.value)}
