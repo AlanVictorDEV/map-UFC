@@ -73,8 +73,8 @@ const CONFIG = {
   },
 
   floor: {
-    size: 5000,
-    position: [500, 0, 600],
+    size: 8000,
+    position: [735, 0, 600],
   },
 
   edge: {
@@ -93,29 +93,7 @@ const CONFIG = {
     routeRadius: 9,
     endpointRadius: 12,
   },
-
-  cameraAnim: {
-    distanciaAtras: 180,
-    duracao: 1600,
-  },
 };
-
-// ============================================================
-// GEOMETRIAS COMPARTILHADAS (unitárias, reaproveitadas via escala)
-// ============================================================
-//
-// Antes: cada aresta/nó criava sua própria BoxGeometry/CylinderGeometry.
-// Em um grafo com centenas de arestas isso significa centenas de
-// alocações de geometria (e de trabalho para o GC) toda vez que a
-// cena é (re)construída.
-//
-// Agora: uma única geometria "unitária" por forma, reaproveitada em
-// todos os meshes daquele tipo através de `mesh.scale`. Essas
-// geometrias são criadas uma única vez no módulo (não por instância
-// do componente) e por isso NUNCA são descartadas no cleanup — são
-// pequenas, ficam vivas durante a vida do app, e várias instâncias do
-// mapa (ou remounts) podem compartilhá-las com segurança.
-// ============================================================
 
 const BASE_GEOMETRIES = {
   unitBox: new THREE.BoxGeometry(1, 1, 1),
@@ -173,10 +151,6 @@ function disposeMaterial(material, sharedSet) {
   material.dispose();
 }
 
-/**
- * Libera os recursos da cena, sem descartar geometrias/materiais
- * compartilhados entre múltiplas instâncias do componente.
- */
 function disposeScene(scene, sharedMaterials) {
   scene.traverse((object) => {
     if (object.geometry && !SHARED_GEOMETRIES.has(object.geometry)) {
@@ -188,15 +162,6 @@ function disposeScene(scene, sharedMaterials) {
     }
   });
 }
-
-// ============================================================
-// MATERIAIS "por instância" do componente
-// ============================================================
-//
-// Estes continuam sendo criados a cada montagem (são poucos e leves)
-// e descartados normalmente no cleanup — cada instância do mapa pode
-// ter sua própria paleta sem interferir em outras.
-// ============================================================
 
 function createMaterials() {
   return {
@@ -288,18 +253,6 @@ function createMaterials() {
   };
 }
 
-// ============================================================
-// MATERIAIS COMPARTILHADOS DO RU / CANTINA (singleton do módulo)
-// ============================================================
-//
-// Antes: `createRU`/`createCantina` criavam ~15 MeshStandardMaterial
-// novos TODA VEZ que eram chamados — e como a cena inteira era
-// reconstruída a cada mudança de rota, isso rodava a cada clique.
-// Agora cada conjunto é criado uma única vez e reutilizado. Como não
-// dependem de props (sempre a mesma paleta), é seguro nunca
-// descartá-los — o custo de memória é irrelevante (sem texturas).
-// ============================================================
-
 let ruMaterialsCache = null;
 
 function getRUMaterials() {
@@ -355,10 +308,6 @@ function getRUMaterials() {
       roughness: 0.3,
       metalness: 0.8,
     }),
-    // Correção: no original a placa "RU" referenciava `normal.ruSign`,
-    // que nunca existia — então SEMPRE caía no fallback e criava um
-    // material novo a cada chamada. Agora existe de verdade e é
-    // reaproveitado.
     sign: new THREE.MeshStandardMaterial({
       color: COLORS.ruSign,
       roughness: 0.5,
@@ -421,18 +370,6 @@ function registerSharedMaterials() {
 
 registerSharedMaterials();
 
-// ============================================================
-// HELPER: cadeiras em InstancedMesh
-// ============================================================
-//
-// RU e cantina desenhavam cada cadeira (assento + encosto + 2 pernas)
-// como 4 meshes independentes, repetidos para cada mesa. Com 8 mesas
-// x 4 cadeiras no RU isso é 128 meshes só de cadeira. Como todas têm
-// exatamente a mesma geometria, agrupamos em 3 InstancedMesh (assento,
-// encosto, pernas) — não importa quantas mesas existam, o custo de
-// desenho passa a ser 3 draw calls em vez de centenas de meshes.
-// ============================================================
-
 function buildChairInstances({
   tables,
   distance = 22,
@@ -474,14 +411,12 @@ function buildChairInstances({
       const chairX = x + Math.sin(angle) * distance;
       const chairZ = z + Math.cos(angle) * distance;
 
-      // Assento
       dummy.position.set(chairX, seat.offsetY, chairZ);
       dummy.rotation.copy(rotationEuler);
       dummy.scale.set(1, 1, 1);
       dummy.updateMatrix();
       seatMesh.setMatrixAt(seatIdx, dummy.matrix);
 
-      // Encosto (offset local rotacionado junto com a cadeira)
       const backLocal = new THREE.Vector3(...back.offset).applyEuler(
         rotationEuler,
       );
@@ -494,7 +429,6 @@ function buildChairInstances({
       dummy.updateMatrix();
       backMesh.setMatrixAt(seatIdx, dummy.matrix);
 
-      // Pernas (esquerda/direita)
       [-1, 1].forEach((sign) => {
         const legLocal = new THREE.Vector3(
           sign * legs.offsetX,
@@ -533,16 +467,6 @@ function buildChairInstances({
   };
 }
 
-// ============================================================
-// ARESTA
-// ============================================================
-//
-// Agora usa a BoxGeometry unitária compartilhada + `mesh.scale`, em
-// vez de criar uma BoxGeometry nova por aresta. Retorna um "handler"
-// que a rota pode chamar depois para trocar espessura/material sem
-// recriar o mesh.
-// ============================================================
-
 function createEdge(scene, p1, p2, materials) {
   const direction = new THREE.Vector3().subVectors(p2, p1);
   const horizontalLength = Math.sqrt(direction.x ** 2 + direction.z ** 2);
@@ -577,15 +501,6 @@ function createEdge(scene, p1, p2, materials) {
 
   return update;
 }
-
-// ============================================================
-// NÓ GENÉRICO
-// ============================================================
-//
-// Cilindro/esfera/anel usam geometria unitária compartilhada e são
-// redimensionados via escala. O anel é criado uma única vez (oculto
-// por padrão) em vez de criado/destruído a cada mudança de rota.
-// ============================================================
 
 function createNode(scene, vertex, materials) {
   const cylinder = new THREE.Mesh(BASE_GEOMETRIES.nodeCylinder, materials.node);
@@ -662,47 +577,120 @@ function createNode(scene, vertex, materials) {
   return update;
 }
 
-// ============================================================
-// LABEL
-// ============================================================
-
 function createLabel(scene, vertex, text) {
   if (!text) return;
 
-  const canvas = document.createElement("canvas");
-  canvas.width = 512;
-  canvas.height = 128;
+  const label = String(text);
 
+  // ============================================================
+  // CONFIGURAÇÃO
+  // ============================================================
+
+  const FONT_SIZE = 16;
+  const PADDING_X = 8;
+  const PADDING_Y = 8;
+  const MAX_WIDTH = 180;
+
+  // ============================================================
+  // CANVAS
+  // ============================================================
+
+  const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
+
   if (!ctx) return;
 
-  ctx.fillStyle = "rgba(10, 12, 20, 0.85)";
+  ctx.font = `600 ${FONT_SIZE}px Arial`;
 
-  if (ctx.roundRect) {
-    ctx.beginPath();
-    ctx.roundRect(8, 8, 496, 112, 18);
-    ctx.fill();
-  } else {
-    ctx.fillRect(8, 8, 496, 112);
+  // ============================================================
+  // QUEBRA DE LINHA
+  // ============================================================
+
+  const words = label.split(" ");
+  const lines = [];
+
+  let currentLine = "";
+
+  words.forEach((word) => {
+    const testLine = currentLine ? `${currentLine} ${word}` : word;
+
+    if (ctx.measureText(testLine).width > MAX_WIDTH && currentLine) {
+      lines.push(currentLine);
+      currentLine = word;
+    } else {
+      currentLine = testLine;
+    }
+  });
+
+  if (currentLine) {
+    lines.push(currentLine);
   }
 
-  ctx.fillStyle = "#ffffff";
-  ctx.font = "bold 34px Arial";
+  // ============================================================
+  // TAMANHO DO LABEL
+  // ============================================================
+
+  const textWidth = Math.min(
+    MAX_WIDTH,
+    Math.max(...lines.map((line) => ctx.measureText(line).width)),
+  );
+
+  const lineHeight = FONT_SIZE + 6;
+
+  canvas.width = Math.ceil(textWidth + PADDING_X * 2);
+  canvas.height = Math.ceil(lines.length * lineHeight + PADDING_Y * 2);
+
+  // Reaplica fonte após alterar o tamanho do canvas
+  ctx.font = `600 ${FONT_SIZE}px Arial`;
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
 
-  const maxWidth = 450;
-  let label = String(text);
+  // ============================================================
+  // FUNDO
+  // ============================================================
 
-  while (ctx.measureText(label).width > maxWidth && label.length > 5) {
-    label = label.slice(0, -4) + "...";
+  ctx.fillStyle = "rgba(10, 12, 20, 0.78)";
+
+  const radius = 10;
+
+  ctx.beginPath();
+
+  if (ctx.roundRect) {
+    ctx.roundRect(2, 2, canvas.width - 4, canvas.height - 4, radius);
+  } else {
+    ctx.fillRect(2, 2, canvas.width - 4, canvas.height - 4);
   }
 
-  ctx.fillText(label, 256, 64);
+  ctx.fill();
+
+  // ============================================================
+  // TEXTO
+  // ============================================================
+
+  ctx.fillStyle = "#ffffff";
+
+  const centerX = canvas.width / 2;
+
+  lines.forEach((line, index) => {
+    const y = PADDING_Y + lineHeight * index + lineHeight / 2;
+
+    ctx.fillText(line, centerX, y);
+  });
+
+  // ============================================================
+  // TEXTURA
+  // ============================================================
 
   const texture = new THREE.CanvasTexture(canvas);
+
   texture.colorSpace = THREE.SRGBColorSpace;
+  texture.minFilter = THREE.LinearFilter;
+  texture.magFilter = THREE.LinearFilter;
   texture.needsUpdate = true;
+
+  // ============================================================
+  // MATERIAL
+  // ============================================================
 
   const material = new THREE.SpriteMaterial({
     map: texture,
@@ -711,16 +699,21 @@ function createLabel(scene, vertex, text) {
     depthTest: false,
   });
 
+  // ============================================================
+  // SPRITE
+  // ============================================================
+
   const sprite = new THREE.Sprite(material);
-  sprite.position.set(vertex.x, 65, vertex.y);
-  sprite.scale.set(100, 25, 1);
+
+  sprite.position.set(vertex.x, 35, vertex.y);
+
+  // Mantém uma escala visual pequena
+  const scale = 0.1;
+
+  sprite.scale.set(canvas.width * scale, canvas.height * scale, 1);
 
   scene.add(sprite);
 }
-
-// ============================================================
-// ESCADA
-// ============================================================
 
 function createEscada(scene, vertex, materials) {
   const group = new THREE.Group();
@@ -1560,13 +1553,16 @@ export default function FloorMap3D({ graph, rota = [], showLabels = true }) {
         update = createEscada(scene, vertex, materials);
       } else {
         update = createNode(scene, vertex, materials);
-
-        if (showLabels) {
-          createLabel(scene, vertex, vertex.nome ?? vertex.label ?? vertex.id);
-        }
       }
 
-      if (update) vertexHandlers.set(vertex.id, update);
+      // LABEL PARA TODOS OS VÉRTICES
+      if (showLabels && vertex.tipo !== "escada") {
+        createLabel(scene, vertex, vertex.nome ?? vertex.label ?? vertex.id);
+      }
+
+      if (update) {
+        vertexHandlers.set(vertex.id, update);
+      }
     });
 
     let animationFrame;
