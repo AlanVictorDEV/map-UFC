@@ -3,26 +3,44 @@ import graph from "../data/graph.json";
 import "./QRCodeLabels.css";
 
 function QRCodeLabels() {
+  const params = new URLSearchParams(window.location.search);
+  const modo = params.get("tipo") || "origem";
+
   const locais = graph.vertices.filter(
     (v) => v.tipo !== "cruzamento" && v.tipo !== "escada",
   );
 
-  // Sempre gera os códigos apontando para a aplicação publicada.
-  //const urlBase =  "http://localhost:5173/";
+  const PORTARIA_ID = "portaria";
+
   const urlBase = "https://mapa-ufc-russas.vercel.app/";
+
+  const locaisQR =
+    modo === "portaria" ? locais.filter((v) => v.id !== PORTARIA_ID) : locais;
 
   return (
     <main className="pagina-qrcodes">
       <header className="qrcodes-header">
+        <h1>
+          {modo === "portaria"
+            ? "Painel de Destinos - Portaria"
+            : "QR Codes de Origem"}
+        </h1>
+
         <button className="botao-imprimir" onClick={() => window.print()}>
           Imprimir QR Codes
         </button>
       </header>
 
       <section className="qrcodes-grid">
-        {locais.map((local) => {
+        {locaisQR.map((local) => {
           const url = new URL(urlBase);
-          url.searchParams.set("origem", local.id);
+
+          if (modo === "portaria") {
+            url.searchParams.set("origem", PORTARIA_ID);
+            url.searchParams.set("destino", local.id);
+          } else {
+            url.searchParams.set("origem", local.id);
+          }
 
           return (
             <article className="qrcode-card" key={local.id}>
@@ -35,7 +53,11 @@ function QRCodeLabels() {
                 includeMargin
               />
 
-              <p>Escaneie para iniciar a navegação</p>
+              <p>
+                {modo === "portaria"
+                  ? "Destino a partir da portaria"
+                  : "Escaneie para definir sua origem"}
+              </p>
             </article>
           );
         })}

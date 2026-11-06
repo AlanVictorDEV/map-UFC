@@ -1758,7 +1758,7 @@ export default function FloorMap3D({
     }
 
     // Velocidade fixa em unidades do modelo 3D por segundo.
-    const VELOCIDADE = 8;
+    const VELOCIDADE = 12;
 
     ctx.ultimoTempoTrajeto = 0;
 

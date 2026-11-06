@@ -20,18 +20,38 @@ function App() {
   );
 
   // Identifica a origem através do QR Code.
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const origemQR = params.get("origem");
 
-    const localValido = locaisDisponiveis.some(
+    const origemQR = params.get("origem");
+    const destinoQR = params.get("destino");
+
+    const origemValida = locaisDisponiveis.some(
       (local) => local.id === origemQR,
     );
 
-    if (localValido) {
+    const destinoValido = locaisDisponiveis.some(
+      (local) => local.id === destinoQR,
+    );
+
+    if (origemValida) {
       setOrigem(origemQR);
     }
+
+    if (destinoValido) {
+      setDestino(destinoQR);
+    }
   }, []);
+
+  useEffect(() => {
+    if (!origem || !destino || origem === destino) return;
+
+    const resultado = dijkstra(graph, origem, destino);
+
+    setRota(resultado);
+    setEstadoTrajeto(resultado.length >= 2 ? "pronto" : "inativo");
+  }, [origem, destino]);
 
   const calcularRota = () => {
     if (!origem || !destino || origem === destino) return;
@@ -146,10 +166,6 @@ function App() {
           <button className="route-button" onClick={reiniciarTrajeto}>
             Reiniciar
           </button>
-        )}
-
-        {estadoTrajeto === "concluido" && (
-          <span className="route-status">Destino alcançado!</span>
         )}
       </div>
 
