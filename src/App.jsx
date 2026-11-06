@@ -1,23 +1,42 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import graph from "./data/graph.json";
 import FloorMap3D from "./components/FloorMap3D";
+import QRCodeLabels from "./components/QRCodeLabels";
 import { dijkstra } from "./algorithms/dijkstra";
 
 function App() {
   const [origem, setOrigem] = useState("");
   const [destino, setDestino] = useState("");
   const [rota, setRota] = useState([]);
+  const gerarQR =
+    new URLSearchParams(window.location.search).get("gerar-qrcodes") === "1";
 
-  // Apenas locais que podem ser escolhidos pelo usuário.
-  // Vértices do tipo "cruzamento" continuam no grafo,
-  // mas não aparecem como origem/destino.
+  if (gerarQR) {
+    return <QRCodeLabels />;
+  }
+
+  // Locais disponíveis para origem e destino.
   const locaisDisponiveis = graph.vertices.filter(
     (v) => v.tipo !== "cruzamento" && v.tipo !== "escada",
   );
 
+  // Identifica a origem através do QR Code.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const origemQR = params.get("origem");
+
+    const localValido = locaisDisponiveis.some(
+      (local) => local.id === origemQR,
+    );
+
+    if (localValido) {
+      setOrigem(origemQR);
+    }
+  }, []);
+
   function calcularRota() {
-    if (!origem || !destino) return;
+    if (!origem || !destino || origem === destino) return;
 
     const resultado = dijkstra(graph, origem, destino);
     setRota(resultado);
@@ -69,7 +88,7 @@ function App() {
         <button
           className="route-button"
           onClick={calcularRota}
-          disabled={!origem || !destino}
+          disabled={!origem || !destino || origem === destino}
         >
           Buscar Rota
         </button>
