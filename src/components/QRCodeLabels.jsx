@@ -14,13 +14,6 @@ function QRCodeLabels() {
   return (
     <main className="pagina-qrcodes">
       <header className="qrcodes-header">
-        <h1>UFC - CAMPUS RUSSAS</h1>
-        <h2>Códigos de localização</h2>
-        <p>
-          Escaneie o QR Code para identificar sua localização e encontrar o
-          caminho até outro ambiente.
-        </p>
-
         <button className="botao-imprimir" onClick={() => window.print()}>
           Imprimir QR Codes
         </button>

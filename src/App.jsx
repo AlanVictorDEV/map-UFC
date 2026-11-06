@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import "./App.css";
 import graph from "./data/graph.json";
 import FloorMap3D from "./components/FloorMap3D";
@@ -9,14 +9,12 @@ function App() {
   const [origem, setOrigem] = useState("");
   const [destino, setDestino] = useState("");
   const [rota, setRota] = useState([]);
+  const [estadoTrajeto, setEstadoTrajeto] = useState("inativo");
+  const [reinicioKey, setReinicioKey] = useState(0);
+
   const gerarQR =
     new URLSearchParams(window.location.search).get("gerar-qrcodes") === "1";
 
-  if (gerarQR) {
-    return <QRCodeLabels />;
-  }
-
-  // Locais disponíveis para origem e destino.
   const locaisDisponiveis = graph.vertices.filter(
     (v) => v.tipo !== "cruzamento" && v.tipo !== "escada",
   );
@@ -35,17 +33,43 @@ function App() {
     }
   }, []);
 
-  function calcularRota() {
+  const calcularRota = () => {
     if (!origem || !destino || origem === destino) return;
 
     const resultado = dijkstra(graph, origem, destino);
+
     setRota(resultado);
+    setEstadoTrajeto(resultado.length >= 2 ? "pronto" : "inativo");
+  };
+
+  const iniciarTrajeto = () => {
+    setEstadoTrajeto("executando");
+  };
+
+  const pausarTrajeto = () => {
+    setEstadoTrajeto("pausado");
+  };
+
+  const continuarTrajeto = () => {
+    setEstadoTrajeto("executando");
+  };
+
+  const reiniciarTrajeto = () => {
+    setReinicioKey((key) => key + 1);
+    setEstadoTrajeto("executando");
+  };
+
+  const concluirTrajeto = useCallback(() => {
+    setEstadoTrajeto("concluido");
+  }, []);
+
+  if (gerarQR) {
+    return <QRCodeLabels />;
   }
 
   return (
     <div className="app">
       <div className="control-panel">
-        {/* ORIGEM */}
         <label htmlFor="select-origem" className="sr-only">
           Origem
         </label>
@@ -54,7 +78,11 @@ function App() {
           id="select-origem"
           className="select-field"
           value={origem}
-          onChange={(e) => setOrigem(e.target.value)}
+          onChange={(e) => {
+            setOrigem(e.target.value);
+            setRota([]);
+            setEstadoTrajeto("inativo");
+          }}
         >
           <option value="">Origem</option>
 
@@ -65,7 +93,6 @@ function App() {
           ))}
         </select>
 
-        {/* DESTINO */}
         <label htmlFor="select-destino" className="sr-only">
           Destino
         </label>
@@ -74,7 +101,11 @@ function App() {
           id="select-destino"
           className="select-field"
           value={destino}
-          onChange={(e) => setDestino(e.target.value)}
+          onChange={(e) => {
+            setDestino(e.target.value);
+            setRota([]);
+            setEstadoTrajeto("inativo");
+          }}
         >
           <option value="">Destino</option>
 
@@ -92,9 +123,43 @@ function App() {
         >
           Buscar Rota
         </button>
+
+        {estadoTrajeto === "pronto" && (
+          <button className="route-button" onClick={iniciarTrajeto}>
+            Iniciar trajeto
+          </button>
+        )}
+
+        {estadoTrajeto === "executando" && (
+          <button className="route-button" onClick={pausarTrajeto}>
+            Pausar
+          </button>
+        )}
+
+        {estadoTrajeto === "pausado" && (
+          <button className="route-button" onClick={continuarTrajeto}>
+            Continuar
+          </button>
+        )}
+
+        {["executando", "pausado", "concluido"].includes(estadoTrajeto) && (
+          <button className="route-button" onClick={reiniciarTrajeto}>
+            Reiniciar
+          </button>
+        )}
+
+        {estadoTrajeto === "concluido" && (
+          <span className="route-status">Destino alcançado!</span>
+        )}
       </div>
 
-      <FloorMap3D graph={graph} rota={rota} />
+      <FloorMap3D
+        graph={graph}
+        rota={rota}
+        estadoTrajeto={estadoTrajeto}
+        reinicioKey={reinicioKey}
+        onTrajetoConcluido={concluirTrajeto}
+      />
     </div>
   );
 }

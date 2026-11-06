@@ -714,6 +714,60 @@ function createLabel(scene, vertex, text) {
 
   scene.add(sprite);
 }
+function createCharacter() {
+  const character = new THREE.Group();
+
+  const bodyMaterial = new THREE.MeshStandardMaterial({
+    color: 0xffd166,
+    roughness: 0.6,
+  });
+
+  const headMaterial = new THREE.MeshStandardMaterial({
+    color: 0xffdbac,
+    roughness: 0.8,
+  });
+
+  const legMaterial = new THREE.MeshStandardMaterial({
+    color: 0x247ba0,
+    roughness: 0.7,
+  });
+
+  // Corpo
+  const body = new THREE.Mesh(
+    new THREE.CylinderGeometry(6, 8, 22, 16),
+    bodyMaterial,
+  );
+  body.position.y = 19;
+  character.add(body);
+
+  // Cabeça
+  const head = new THREE.Mesh(
+    new THREE.SphereGeometry(7, 16, 16),
+    headMaterial,
+  );
+  head.position.y = 35;
+  character.add(head);
+
+  // Pernas
+  const legs = [];
+
+  [-1, 1].forEach((side) => {
+    const leg = new THREE.Mesh(new THREE.BoxGeometry(5, 14, 5), legMaterial);
+
+    leg.position.set(side * 3, 7, 0);
+    character.add(leg);
+    legs.push(leg);
+  });
+
+  character.traverse((object) => {
+    if (object.isMesh) {
+      object.castShadow = true;
+      object.receiveShadow = true;
+    }
+  });
+
+  return { character, legs };
+}
 
 function createEscada(scene, vertex, materials) {
   const group = new THREE.Group();
@@ -1442,7 +1496,14 @@ function createFloor(scene, materials) {
 // COMPONENTE PRINCIPAL
 // ============================================================
 
-export default function FloorMap3D({ graph, rota = [], showLabels = true }) {
+export default function FloorMap3D({
+  graph,
+  rota = [],
+  showLabels = true,
+  estadoTrajeto = "inativo",
+  reinicioKey = 0,
+  onTrajetoConcluido,
+}) {
   const mountRef = useRef(null);
 
   // sceneRef guarda tudo o que o efeito de rota precisa acessar sem
@@ -1597,11 +1658,20 @@ export default function FloorMap3D({ graph, rota = [], showLabels = true }) {
       vertexHandlers,
       materials,
       cameraAnimFrame: 0,
+
+      personagem: null,
+      pernasPersonagem: [],
+      segmentoAtual: 0,
+      ultimaReinicioKey: 0,
+      progressoSegmento: 0,
+      trajetoAnimFrame: 0,
+      ultimoTempoTrajeto: 0,
     };
 
     return () => {
       cancelAnimationFrame(animationFrame);
       cancelAnimationFrame(sceneRef.current?.cameraAnimFrame ?? 0);
+      cancelAnimationFrame(sceneRef.current?.trajetoAnimFrame ?? 0);
       resizeObserver.disconnect();
       controls.dispose();
 
@@ -1626,7 +1696,154 @@ export default function FloorMap3D({ graph, rota = [], showLabels = true }) {
   // "pesados" ou no renderer — apenas alterna escala/cor/visibilidade
   // dos handlers já criados, e anima a câmera.
   // ==========================================================
+  // ==========================================================
+  // EFEITO 3 — MOVIMENTAÇÃO DO PERSONAGEM
+  // ==========================================================
 
+  useEffect(() => {
+    const ctx = sceneRef.current;
+
+    if (!ctx || rota.length < 2) return undefined;
+
+    const { scene, vertexMap } = ctx;
+
+    // Cancela uma animação anterior, se existir.
+    cancelAnimationFrame(ctx.trajetoAnimFrame);
+
+    // Verifica se houve uma solicitação de reinício.
+    const novoReinicio = ctx.ultimaReinicioKey !== reinicioKey;
+
+    if (estadoTrajeto === "pronto" || novoReinicio) {
+      ctx.segmentoAtual = 0;
+      ctx.progressoSegmento = 0;
+      ctx.ultimaReinicioKey = reinicioKey;
+    }
+    // Cria o personagem apenas uma vez.
+    if (!ctx.personagem) {
+      const { character, legs } = createCharacter();
+
+      ctx.personagem = character;
+      ctx.pernasPersonagem = legs;
+
+      scene.add(character);
+    }
+
+    const personagem = ctx.personagem;
+
+    // Obtém as posições de todos os vértices da rota.
+    const pontos = rota
+      .map((id) => vertexMap.get(id))
+      .filter(Boolean)
+      .map((vertex) => toVec3(vertex.x, vertex.y));
+
+    if (pontos.length < 2) return undefined;
+
+    const posicionarNaOrigem = () => {
+      personagem.position.copy(pontos[0]);
+      personagem.position.y = 0;
+    };
+
+    // Ao iniciar pela primeira vez ou reiniciar.
+    if (estadoTrajeto === "pronto" || novoReinicio) {
+      posicionarNaOrigem();
+    }
+
+    if (estadoTrajeto !== "executando") {
+      return undefined;
+    }
+
+    // Se acabou de iniciar, posiciona na origem.
+    if (ctx.segmentoAtual === 0 && ctx.progressoSegmento === 0) {
+      posicionarNaOrigem();
+    }
+
+    // Velocidade fixa em unidades do modelo 3D por segundo.
+    const VELOCIDADE = 8;
+
+    ctx.ultimoTempoTrajeto = 0;
+
+    const animar = (tempoAtual) => {
+      if (!ctx.ultimoTempoTrajeto) {
+        ctx.ultimoTempoTrajeto = tempoAtual;
+      }
+
+      const delta = Math.min(
+        (tempoAtual - ctx.ultimoTempoTrajeto) / 1000,
+        0.05,
+      );
+
+      ctx.ultimoTempoTrajeto = tempoAtual;
+
+      let distanciaRestante = VELOCIDADE * delta;
+
+      while (distanciaRestante > 0 && ctx.segmentoAtual < pontos.length - 1) {
+        const inicio = pontos[ctx.segmentoAtual];
+        const fim = pontos[ctx.segmentoAtual + 1];
+
+        const distancia = inicio.distanceTo(fim);
+
+        if (distancia === 0) {
+          ctx.segmentoAtual++;
+          ctx.progressoSegmento = 0;
+          continue;
+        }
+
+        const distanciaDoSegmento = distancia * (1 - ctx.progressoSegmento);
+
+        if (distanciaRestante >= distanciaDoSegmento) {
+          distanciaRestante -= distanciaDoSegmento;
+
+          ctx.segmentoAtual++;
+          ctx.progressoSegmento = 0;
+
+          personagem.position.copy(fim);
+        } else {
+          ctx.progressoSegmento += distanciaRestante / distancia;
+          distanciaRestante = 0;
+
+          personagem.position.lerpVectors(inicio, fim, ctx.progressoSegmento);
+        }
+
+        // Orienta o personagem na direção do próximo trecho.
+        const direcao = new THREE.Vector3().subVectors(fim, inicio).normalize();
+
+        personagem.rotation.y = Math.atan2(direcao.x, direcao.z);
+      }
+
+      personagem.position.y = 0;
+
+      // Animação simples das pernas enquanto caminha.
+      const andando = ctx.segmentoAtual < pontos.length - 1;
+
+      if (andando) {
+        const movimento = tempoAtual * 0.012;
+
+        ctx.pernasPersonagem[0].rotation.x = Math.sin(movimento) * 0.5;
+        ctx.pernasPersonagem[1].rotation.x = -Math.sin(movimento) * 0.5;
+      } else {
+        ctx.pernasPersonagem.forEach((perna) => {
+          perna.rotation.x = 0;
+        });
+
+        personagem.position.copy(pontos[pontos.length - 1]);
+        personagem.position.y = 0;
+
+        ctx.ultimoTempoTrajeto = 0;
+        onTrajetoConcluido?.();
+
+        return;
+      }
+
+      ctx.trajetoAnimFrame = requestAnimationFrame(animar);
+    };
+
+    ctx.trajetoAnimFrame = requestAnimationFrame(animar);
+
+    return () => {
+      cancelAnimationFrame(ctx.trajetoAnimFrame);
+      ctx.ultimoTempoTrajeto = 0;
+    };
+  }, [estadoTrajeto, rota, reinicioKey, onTrajetoConcluido]);
   useEffect(() => {
     const ctx = sceneRef.current;
     if (!ctx) return undefined;
