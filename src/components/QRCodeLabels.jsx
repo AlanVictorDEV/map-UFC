@@ -48,7 +48,7 @@ function QRCodeLabels() {
 
               <QRCodeSVG
                 value={url.toString()}
-                size={160}
+                size={250}
                 level="H"
                 includeMargin
               />
