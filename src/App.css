@@ -1,77 +1,418 @@
-.app {
-  width: 100vw;
-  height: 100vh;
-  background: #0d0d1a;
-  font-family: "Segoe UI", sans-serif;
+
+* {
   box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
   margin: 0;
   padding: 0;
   overflow: hidden;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
+
+.app {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: #0d0d1a;
+}
+
+/* =========================================================
+   MAPA
+========================================================= */
+
+.app > :first-child {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.app canvas {
+  display: block;
+}
+
+/* =========================================================
+   PAINEL DE NAVEGAÇÃO
+========================================================= */
 
 .control-panel {
   position: absolute;
-  width: 100%;
-
+  top: 24px;
+  left: 24px;
   z-index: 10;
+
+  width: min(390px, calc(100% - 48px));
+  padding: 24px;
+
   display: flex;
-  gap: 12px;
+  flex-direction: column;
+  gap: 20px;
+
+  background: rgba(17, 24, 39, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 20px;
+
+  color: #f8fafc;
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* =========================================================
+   CABEÇALHO
+========================================================= */
+
+.panel-header {
+  display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  background: transparent;
-  padding: 16px;
+  gap: 13px;
+}
+
+
+.panel-eyebrow {
+  width: 100%;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+}
+
+/* =========================================================
+   CAMPOS DE ORIGEM E DESTINO
+========================================================= */
+
+.route-fields {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.route-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+
+  min-width: 0;
+  padding: 12px 14px;
+
+  background: rgba(255, 255, 255, 0.055);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.route-field:focus-within {
+  border-color: #38bdf8;
+  background: rgba(56, 189, 248, 0.07);
+}
+
+.field-marker {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+.origin-marker {
+  background: #22c55e;
+}
+
+.destination-marker {
+  background: #f97316;
+  border-radius: 3px;
+}
+
+.route-connector {
+  position: absolute;
+  top: 34px;
+  left: 19px;
+  height: 35px;
+  border-left: 1px dashed rgba(148, 163, 184, 0.5);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.field-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.field-content label {
+  display: block;
+  margin-bottom: 5px;
+
+  color: #94a3b8;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.1px;
 }
 
 .select-field {
-  background: white;
-  color: black;
-  border: 1px solid #2e2e2e;
-  border-radius: 8px;
-  padding: 8px 14px;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  height: 25px;
+
+  padding: 0 25px 0 0;
+
+  color: #f8fafc;
   font-size: 14px;
+  font-weight: 500;
+
+  background-color: transparent;
+  border: none;
+  outline: none;
   cursor: pointer;
+
+  appearance: none;
+  -webkit-appearance: none;
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: 16px;
+}
+
+.select-field option {
+  color: #111827;
+  background: #ffffff;
+}
+
+.select-field:focus {
   outline: none;
 }
 
+/* =========================================================
+   RESUMO DA ROTA
+========================================================= */
+
+.route-summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 9px;
+
+  padding: 11px 13px;
+
+  color: #cbd5e1;
+  font-size: 12px;
+  font-weight: 500;
+
+  background: rgba(56, 189, 248, 0.07);
+  border: 1px solid rgba(56, 189, 248, 0.14);
+  border-radius: 10px;
+  overflow-wrap: anywhere;
+}
+
+.summary-arrow {
+  color: #38bdf8;
+  font-size: 16px;
+}
+
+/* =========================================================
+   BOTÕES
+========================================================= */
+
+.route-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .route-button {
-  background: rgb(38, 125, 255);
-  color: #fff;
+  flex: 1;
+  min-width: 0;
+  min-height: 48px;
+
+  padding: 12px 16px;
+
   border: none;
-  border-radius: 8px;
-  padding: 12px 20px;
+  border-radius: 12px;
+
   font-size: 14px;
-  font-weight: bold;
+  font-weight: 700;
+
   cursor: pointer;
-  letter-spacing: 0.5px;
-  transition: transform 0.1s;
+  transition: transform 0.2s, background 0.2s;
 }
 
-.route-button:active {
-  transform: scale(0.97);
-}
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
+.primary-button {
+  color: #07111f;
+  background: #38bdf8;
 }
 
-.route-info {
-  color: #ff6b81;
+.primary-button:hover {
+  background: #7dd3fc;
+  transform: translateY(-1px);
+}
+
+.primary-button:active {
+  transform: scale(0.98);
+}
+
+.primary-button span {
+  margin-right: 7px;
+}
+
+.disabled-button {
+  color: #94a3b8;
+  background: rgba(255, 255, 255, 0.07);
+  cursor: not-allowed;
+}
+
+.restart-button {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+
+  color: #e2e8f0;
+  font-size: 25px;
+
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.restart-button:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.route-completed {
+  flex: 1;
+  padding: 14px;
+
+  color: #4ade80;
   font-size: 13px;
-  background: rgba(255, 71, 87, 0.1);
-  border: 1px solid rgba(255, 71, 87, 0.3);
-  border-radius: 6px;
-  padding: 6px 12px;
+  font-weight: 700;
+  text-align: center;
+
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  border-radius: 12px;
 }
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
 @media (max-width: 768px) {
-  .route-button,
-  .select-field {
+  .app {
+    height: 100vh;
+    height: 100dvh;
+  }
+
+  .control-panel {
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
     width: 100%;
+    max-height: 65%;
+    overflow-y: auto;
+
+    padding: 20px 20px calc(18px + env(safe-area-inset-bottom));
+
+    gap: 15px;
+
+    background: rgba(15, 23, 42, 0.97);
+
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 0;
+
+
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+  }
+
+  .panel-header {
+    gap: 11px;
+  }
+
+  .panel-indicator {
+    height: 36px;
+  }
+
+  .panel-header h1 {
+    font-size: 19px;
+  }
+
+  .panel-eyebrow {
+    font-size: 9px;
+  }
+
+  .route-fields {
+    gap: 11px;
+  }
+
+  .route-field {
+    min-height: 65px;
+    padding: 11px 13px;
+  }
+
+  .field-content label {
+    font-size: 9px;
+  }
+
+  .select-field {
+    height: 28px;
+    font-size: 14px;
+  }
+
+  .route-connector {
+    top: 32px;
+    height: 28px;
+  }
+
+  .route-summary {
+    font-size: 11px;
+  }
+
+  .route-button {
+    min-height: 50px;
+    font-size: 14px;
+  }
+
+}
+
+/* =========================================================
+   CELULARES PEQUENOS
+========================================================= */
+
+@media (max-width: 380px) {
+  .control-panel {
+    padding-left: 15px;
+    padding-right: 15px;
+    gap: 12px;
+  }
+
+  .panel-header h1 {
+    font-size: 17px;
+  }
+
+  .route-field {
+    min-height: 60px;
+  }
+
+  .select-field {
+    font-size: 13px;
   }
 }
