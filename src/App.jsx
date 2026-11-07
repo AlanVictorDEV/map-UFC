@@ -155,7 +155,6 @@ function App() {
             </div>
           </div>
         </div>
-
         <div className="route-actions">
           {estadoTrajeto === "pronto" && (
             <button
@@ -191,7 +190,7 @@ function App() {
           )}
 
           {estadoTrajeto === "concluido" && (
-            <div className="route-completed">✓ Você chegou ao destino!</div>
+            <div className="route-completed">Você chegou ao destino!</div>
           )}
 
           {["executando", "pausado", "concluido"].includes(estadoTrajeto) && (

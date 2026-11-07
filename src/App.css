@@ -1,19 +1,21 @@
-
-* {
-  box-sizing: border-box;
-}
-
 html,
 body,
 #root {
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden;
-  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
+body {
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
 .app {
   position: relative;
   width: 100%;
@@ -139,8 +141,8 @@ body,
   position: absolute;
   top: 34px;
   left: 19px;
-  height: 35px;
-  border-left: 1px dashed rgba(148, 163, 184, 0.5);
+  height: 10px;
+  border-left: 1px dashed rgba(148, 184, 164, 0.5);
   z-index: 2;
   pointer-events: none;
 }
@@ -195,33 +197,6 @@ body,
   outline: none;
 }
 
-/* =========================================================
-   RESUMO DA ROTA
-========================================================= */
-
-.route-summary {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 9px;
-
-  padding: 11px 13px;
-
-  color: #cbd5e1;
-  font-size: 12px;
-  font-weight: 500;
-
-  background: rgba(56, 189, 248, 0.07);
-  border: 1px solid rgba(56, 189, 248, 0.14);
-  border-radius: 10px;
-  overflow-wrap: anywhere;
-}
-
-.summary-arrow {
-  color: #38bdf8;
-  font-size: 16px;
-}
 
 /* =========================================================
    BOTÕES
@@ -319,10 +294,10 @@ body,
   }
 
   .control-panel {
-    top: auto;
+    bottom: auto;
     left: 0;
     right: 0;
-    bottom: 0;
+    top: 0;
 
     width: 100%;
     max-height: 65%;
@@ -382,37 +357,9 @@ body,
     height: 28px;
   }
 
-  .route-summary {
-    font-size: 11px;
-  }
-
   .route-button {
     min-height: 50px;
     font-size: 14px;
   }
 
-}
-
-/* =========================================================
-   CELULARES PEQUENOS
-========================================================= */
-
-@media (max-width: 380px) {
-  .control-panel {
-    padding-left: 15px;
-    padding-right: 15px;
-    gap: 12px;
-  }
-
-  .panel-header h1 {
-    font-size: 17px;
-  }
-
-  .route-field {
-    min-height: 60px;
-  }
-
-  .select-field {
-    font-size: 13px;
-  }
 }
