@@ -12,15 +12,18 @@ function App() {
   const [estadoTrajeto, setEstadoTrajeto] = useState("inativo");
   const [reinicioKey, setReinicioKey] = useState(0);
 
+  // Identifica os modos de geração de QR Codes.
+  const paramsURL = new URLSearchParams(window.location.search);
+
   const gerarQR =
-    new URLSearchParams(window.location.search).get("gerar-qrcodes") === "1";
+    paramsURL.get("gerar-qrcodes") === "1" ||
+    paramsURL.get("gerar-totem") === "1";
 
   const locaisDisponiveis = graph.vertices.filter(
     (v) => v.tipo !== "cruzamento" && v.tipo !== "escada",
   );
 
-  // Identifica a origem através do QR Code.
-
+  // Identifica a origem e o destino através dos parâmetros da URL.
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
 
@@ -35,32 +38,28 @@ function App() {
       (local) => local.id === destinoQR,
     );
 
-    if (origemValida) {
-      setOrigem(origemQR);
+    if (origemQR) {
+      setOrigem(origemValida ? origemQR : "");
     }
 
-    if (destinoValido) {
-      setDestino(destinoQR);
+    if (destinoQR) {
+      setDestino(destinoValido ? destinoQR : "");
     }
   }, []);
 
+  // Calcula automaticamente a menor rota quando origem e destino são definidos.
   useEffect(() => {
-    if (!origem || !destino || origem === destino) return;
+    if (!origem || !destino || origem === destino) {
+      setRota([]);
+      setEstadoTrajeto("inativo");
+      return;
+    }
 
     const resultado = dijkstra(graph, origem, destino);
 
     setRota(resultado);
     setEstadoTrajeto(resultado.length >= 2 ? "pronto" : "inativo");
   }, [origem, destino]);
-
-  const calcularRota = () => {
-    if (!origem || !destino || origem === destino) return;
-
-    const resultado = dijkstra(graph, origem, destino);
-
-    setRota(resultado);
-    setEstadoTrajeto(resultado.length >= 2 ? "pronto" : "inativo");
-  };
 
   const iniciarTrajeto = () => {
     setEstadoTrajeto("executando");
@@ -83,6 +82,7 @@ function App() {
     setEstadoTrajeto("concluido");
   }, []);
 
+  // Exibe a página de geração de QR Codes ou de painéis dos totens.
   if (gerarQR) {
     return <QRCodeLabels />;
   }
@@ -98,11 +98,7 @@ function App() {
           id="select-origem"
           className="select-field"
           value={origem}
-          onChange={(e) => {
-            setOrigem(e.target.value);
-            setRota([]);
-            setEstadoTrajeto("inativo");
-          }}
+          onChange={(e) => setOrigem(e.target.value)}
         >
           <option value="">Origem</option>
 
@@ -121,11 +117,7 @@ function App() {
           id="select-destino"
           className="select-field"
           value={destino}
-          onChange={(e) => {
-            setDestino(e.target.value);
-            setRota([]);
-            setEstadoTrajeto("inativo");
-          }}
+          onChange={(e) => setDestino(e.target.value)}
         >
           <option value="">Destino</option>
 
@@ -135,14 +127,6 @@ function App() {
             </option>
           ))}
         </select>
-
-        <button
-          className="route-button"
-          onClick={calcularRota}
-          disabled={!origem || !destino || origem === destino}
-        >
-          Buscar Rota
-        </button>
 
         {estadoTrajeto === "pronto" && (
           <button className="route-button" onClick={iniciarTrajeto}>

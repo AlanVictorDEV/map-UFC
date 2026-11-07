@@ -4,25 +4,66 @@ import "./QRCodeLabels.css";
 
 function QRCodeLabels() {
   const params = new URLSearchParams(window.location.search);
-  const modo = params.get("tipo") || "origem";
 
+  // Identifica o modo de geração
+  const modoTotem = params.get("gerar-totem") === "1";
+
+  // Origem configurada para o totem
+  const origemId = params.get("origem");
+
+  // URL principal do sistema
+  const urlBase = "https://mapa-ufc-russas.vercel.app/";
+
+  // Locais disponíveis para navegação
   const locais = graph.vertices.filter(
     (v) => v.tipo !== "cruzamento" && v.tipo !== "escada",
   );
 
-  const PORTARIA_ID = "portaria";
+  // Valida a origem informada na URL
+  const origem = locais.find((v) => v.id === origemId);
 
-  const urlBase = "https://mapa-ufc-russas.vercel.app/";
+  // No totem, remove a própria origem da lista de destinos
+  const locaisQR = modoTotem ? locais.filter((v) => v.id !== origemId) : locais;
 
-  const locaisQR =
-    modo === "portaria" ? locais.filter((v) => v.id !== PORTARIA_ID) : locais;
+  // Impede a geração de um painel com origem inválida
+  if (modoTotem && !origem) {
+    return (
+      <main className="pagina-qrcodes">
+        <header className="qrcodes-header">
+          <h1>Não foi possível gerar o painel</h1>
+        </header>
+
+        <p>A origem informada não existe ou não está disponível no grafo.</p>
+
+        <p>
+          ID recebido: <strong>{origemId || "Não informado"}</strong>
+        </p>
+      </main>
+    );
+  }
+
+  // Gera a URL correspondente a cada QR Code
+  const gerarUrlQR = (local) => {
+    const url = new URL(urlBase);
+
+    if (modoTotem) {
+      // Totem: origem fixa e destino variável
+      url.searchParams.set("origem", origemId);
+      url.searchParams.set("destino", local.id);
+    } else {
+      // Sala: somente a origem é definida
+      url.searchParams.set("origem", local.id);
+    }
+
+    return url.toString();
+  };
 
   return (
     <main className="pagina-qrcodes">
       <header className="qrcodes-header">
         <h1>
-          {modo === "portaria"
-            ? "Painel de Destinos - Portaria"
+          {modoTotem
+            ? `Painel de Destinos - ${origem.nome}`
             : "QR Codes de Origem"}
         </h1>
 
@@ -32,35 +73,24 @@ function QRCodeLabels() {
       </header>
 
       <section className="qrcodes-grid">
-        {locaisQR.map((local) => {
-          const url = new URL(urlBase);
+        {locaisQR.map((local) => (
+          <article className="qrcode-card" key={local.id}>
+            <h3>{local.nome || local.label || local.id}</h3>
 
-          if (modo === "portaria") {
-            url.searchParams.set("origem", PORTARIA_ID);
-            url.searchParams.set("destino", local.id);
-          } else {
-            url.searchParams.set("origem", local.id);
-          }
+            <QRCodeSVG
+              value={gerarUrlQR(local)}
+              size={250}
+              level="H"
+              includeMargin
+            />
 
-          return (
-            <article className="qrcode-card" key={local.id}>
-              <h3>{local.nome}</h3>
-
-              <QRCodeSVG
-                value={url.toString()}
-                size={250}
-                level="H"
-                includeMargin
-              />
-
-              <p>
-                {modo === "portaria"
-                  ? "Destino a partir da portaria"
-                  : "Escaneie para definir sua origem"}
-              </p>
-            </article>
-          );
-        })}
+            <p>
+              {modoTotem
+                ? `Destino a partir de ${origem.nome}`
+                : "Escaneie para definir sua origem"}
+            </p>
+          </article>
+        ))}
       </section>
     </main>
   );
